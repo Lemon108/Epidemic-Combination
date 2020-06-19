@@ -1,0 +1,13 @@
+.NewMain{
+    position: relative;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    margin-top: 5%;
+    margin-left: 75%;
+    background-color: white;
+}
+
+.NewMain img{
+    width: 200px;
+}

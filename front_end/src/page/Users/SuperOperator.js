@@ -70,6 +70,7 @@ class SuperOperator extends Component {
             .then(res => res.json())
             .then((result)=>{
                 //返回bool值判断是否更改
+                alert(result.message);
                 if(result.isSuccess){
                     alert("更改成功");
                 }else{
