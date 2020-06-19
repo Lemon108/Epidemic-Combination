@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db.models import Avg, Max, Min, Count, Sum
 import json
 import time
+from users import decorators
 from . import models
 
 # Create your views here.
@@ -15,21 +16,22 @@ banned_word_list = ['这里是一些违禁词']
 # 发布新闻
 
 
+@decorators.group_required('admin_1')
 def publish_news(request):
     if request.method == 'publish_news':
         '''发布新闻
         '''
         # 检查权限
-        try:
-            user_info = models.UserInfo.objects.get(
-                username=request.user.username)
-            user_group = Group.objects.get(user=user_info)
-            User_id = request.session.get('_auth_user_id')
-        except models.UserInfo.DoesNotExist:
-            return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
+        # try:
+        #     user_info = models.UserInfo.objects.get(
+        #         username=request.user.username)
+        #     user_group = Group.objects.get(user=user_info)
+        #     User_id = request.session.get('_auth_user_id')
+        # except models.UserInfo.DoesNotExist:
+        #     return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
 
         # 获取新闻数据
-        if user_group == 'admin_1':  # 等一个接口用法
+        if True:#user_group == 'admin_1':  # 等一个接口用法
             News_content = json.loads(request.body)
 
             News_id = models.News.objects.aggregate(Max('news_id'))[
@@ -87,14 +89,15 @@ def publish_news(request):
                 news_img_id = news_img_id+1
             NIrelation = models.NewsImages.objects.create(
                 news_files_id=news_img_id, img_id=Img_id, news_id=News_id)
-        else:
-            return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
+        # else:
+            # return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
 
         return HttpResponseRedirect('/News/')
 
 # 发表评论
 
 
+@decorators.login_required
 def publish_comment(request,newsid):
     # 检查权限
     try:
@@ -168,16 +171,17 @@ def view_news(request,newsid):
 
 
 # 删除评论
+@decorators.group_required('admin_1')
 def delete_comm(request):
     # 检查权限
-    try:
-        user_info = models.UserInfo.objects.get(
-            username=request.user.username)
-        user_group = Group.objects.get(user=user_info)
-    except models.UserInfo.DoesNotExist:
-        return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
-    if user_group != 'admin_1':  # 等一个接口
-        return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
+    # try:
+    #     user_info = models.UserInfo.objects.get(
+    #         username=request.user.username)
+    #     user_group = Group.objects.get(user=user_info)
+    # except models.UserInfo.DoesNotExist:
+    #     return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
+    # if user_group != 'admin_1':  # 等一个接口
+    #     return HttpResponse("请使用疫情新闻发布子系统管理员账号登录")
 
     # 获取评论数据
     Cmt_info = json.loads(request.body)
@@ -196,14 +200,15 @@ def delete_comm(request):
 # 举报评论
 
 
+@decorators.login_required
 def report(request):
-    try:
-        user_info = models.UserInfo.objects.get(
-            username=request.user.username)
-        user_group = Group.objects.get(user=user_info)
-        User_id = request.session.get('_auth_user_id')
-    except models.UserInfo.DoesNotExist:
-        return HttpResponse("请登录")  # 游客
+    # try:
+    #     user_info = models.UserInfo.objects.get(
+    #         username=request.user.username)
+    #     user_group = Group.objects.get(user=user_info)
+    #     User_id = request.session.get('_auth_user_id')
+    # except models.UserInfo.DoesNotExist:
+    #     return HttpResponse("请登录")  # 游客
 
     # 获取举报信息
     Cmt_info = json.loads(request.body)
