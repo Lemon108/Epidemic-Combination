@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
 # from rest_framework.views import APIView
-from rest_framework.response import Response
+# from rest_framework.response import Response
 from django.contrib.auth.models import Group, User
 from django.db.models import Avg, Max, Min, Count, Sum
 import json
 import time
-from users import decorators
+from Group06.users import decorators
 from . import models
 
 # Create your views here.

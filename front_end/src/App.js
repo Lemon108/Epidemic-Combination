@@ -16,6 +16,7 @@ import ChangePassword from './page/Users/ChangePassword';
 import RealChange from './page/Users/RealChange';
 import RealCreate from './page/Users/RealCreate';
 import SuperOperator from './page/Users/SuperOperator';
+import News from './page/news/News';
 
 
 import "./index.css";
@@ -48,6 +49,7 @@ class App extends Component {
 					<Route exact path = "/RealChange" component = {RealChange}></Route>
                   	<Route exact path = "/RealCreate" component = {RealCreate}></Route>
 					<Route exact path = "/SuperOperator" component = {SuperOperator}></Route>
+					<Route exact path = "/News" component = {News}></Route>
 				</Switch>
 			</BrowserRouter>
 			</div>

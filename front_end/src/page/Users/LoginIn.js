@@ -7,7 +7,7 @@ import Title from './Title';
 import {backendUrl} from "./Common";
 import cookie from 'react-cookies'
 import Body from './Body';
-import { Button } from 'antd';
+import { Button, Form,Input, Checkbox } from 'antd';
 import Navi from '../../components/Menu/Navigator';
 import Logo from '../../asserts/logo.jpg';
 import '../../components/Menu/Menu.css';
@@ -37,6 +37,7 @@ class LoginIn extends Component {
     }
 
     AppData=()=>{
+        
         fetch(backendUrl+"user/login/post/",{
             method:"post",
             mode:"cors",
@@ -93,26 +94,37 @@ class LoginIn extends Component {
                     </div>
                     <div className = "Info_Login" style={{float:'left'}}>
                         <div>
-                            <form>
-                                <div>
-                                     <input id = "text" type = "text" name = "用户名" placeholder = "用户名" ref = "name" onChange = {(e)=>this.GetUsername(e)}/>
-                                </div>
-                                <div>
-                                    <div>
-                                        <input id = "text" type = "password" name = "密码" placeholder = "密码" ref = "code" onChange = {(e)=>this.GetCode(e)}/>
-                                    </div>
-                                </div>
-                            </form>
-                            <div>
-                                <Button onClick = {this.AppData} type = "primary">
+                        <Form
+                            name="basic"
+                            initialValues={{ remember: true }}
+                            onFinish={this.AppData}>
+                            
+                            <Form.Item
+                                label="用户名"
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your username!' }]}
+                            >
+                                <Input onChange = {(e)=>this.GetUsername(e)}/>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="密码"
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your password!' }]}>
+
+                                <Input.Password onChange = {(e)=>this.GetCode(e)}/>
+
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
                                     登录
                                 </Button>
-                            </div>
-                            <div>
                                 <Button onClick = {this.Back} type = "primary">
                                     返回
                                 </Button>
-                            </div>
+                            </Form.Item>
+                        </Form>
                         </div>
                     </div>
                 </div>
