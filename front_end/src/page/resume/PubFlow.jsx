@@ -50,7 +50,7 @@ class PubFlow extends React.Component {
 		let data = { ...this.state };
 		if ( (data.Province_destination != data.Province_source) && data.Amount != '' && data.Province_destination != '' && data.Province_source != '' && data.Date != '') {
 			console.log(data);
-			let res = await axios.post(`${server}/write/`, data);
+			let res = await axios.post(`write/`, data);
 			console.log(res);
 			alert("提交成功！");
 		}

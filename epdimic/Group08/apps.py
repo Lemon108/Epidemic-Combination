@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class Group08Config(AppConfig):
-    name = 'Group08'
+class TransportConfig(AppConfig):
+    name = 'transport'

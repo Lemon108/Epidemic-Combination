@@ -15,7 +15,7 @@ class SituationMoreInfo extends React.Component {
 	state = {
 		provinceId: 0,
 		provinceData: {
-			0:['北京','BF'],
+			0:['北京','BJ'],
             1:['天津','TJ'],
         	2:['河北','HE'],
         	3:['山西','SX'],

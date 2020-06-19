@@ -14,7 +14,13 @@ class Navi extends React.Component {
       <Menu onClick={this.handleClick} mode="horizontal">
         <Menu.Item key="graph" icon={<LineChartOutlined />}> <Link to = '/ESS/situation'> 国内疫情 </Link></Menu.Item>
         <Menu.Item key="news" icon={<AppstoreOutlined />}> <Link to = '/ESS/news'> 疫情新闻 </Link> </Menu.Item>
-        <Menu.Item key="transportation" icon={<CarOutlined />}> <Link to = '/ESS/transportation'> 同乘交通自查 </Link> </Menu.Item>
+        <SubMenu icon={<CarOutlined />} title="同乘交通自查">
+          <Menu.ItemGroup>
+            <Menu.Item key="transportation-shift"> <Link to = '/ESS/transportation/shift'> 班次 </Link> </Menu.Item>
+            <Menu.Item key="transportation-flight"> <Link to = '/ESS/transportation/flight'> 航班 </Link> </Menu.Item>
+            <Menu.Item key="transportation-admin"> <Link to = '/ESS/transportation/admin'> 导入班次 </Link> </Menu.Item>
+          </Menu.ItemGroup>
+        </SubMenu>
         <SubMenu icon={<NotificationOutlined />} title="复工情况">
           <Menu.ItemGroup>
             <Menu.Item key="action"> <Link to = '/ESS/resumeaction'> 各省复工举措 </Link> </Menu.Item>

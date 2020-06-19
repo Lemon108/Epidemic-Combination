@@ -3,6 +3,8 @@ import React from 'react'
 import Situation from '../../page/situation/show/index'
 import News from '../../page/news/index'
 import CarCheck from '../../page/transportation/carcheck'
+import FlightCheck from '../../page/transportation/flightcheck'
+import PubTrains from '../../page/transportation/PubTrans'
 import ResumeAction from '../../page/resume/resumeaction'
 import PopulationFlow from '../../page/resume/flow'
 import Forum from '../../page/resume/forum'
@@ -25,7 +27,9 @@ class ContentMain extends React.Component {
 					<Route exact path='/ESS/situation' component={Situation}/>
 					<Route exact path='/ESS/situation/situationMoreInfo' component={SituationMoreInfo}/>
 					<Route exact path='/ESS/news' component={News}/>
-					<Route exact path='/ESS/transportation' component={CarCheck}/>
+					<Route exact path='/ESS/transportation/shift' component={CarCheck}/>
+					<Route exact path='/ESS/transportation/flight' component={FlightCheck}/>
+					<Route exact path='/ESS/transportation/admin' component={PubTrains}/>
 					<Route exact path='/ESS/resumeaction' component={ResumeAction}/>
                     <Route exact path='/ESS/populationflow' component={PopulationFlow}/>
 					<Route exact path='/ESS/forum' component={Forum}/>

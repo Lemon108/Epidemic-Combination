@@ -120,7 +120,7 @@ class ResumeAction extends React.Component {
 											<li> 
 												<a href={"#"+item.id}>{"举措编号："+item.id}</a>
 												<span>
-												发布省份：{item.province}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：{item.time}&nbsp;&nbsp;&nbsp;
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：{item.time}&nbsp;&nbsp;&nbsp;
 												</span>
 											</li>
 										);

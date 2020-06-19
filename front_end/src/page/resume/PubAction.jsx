@@ -50,7 +50,7 @@ class PubAction extends React.Component {
 		let data = { ...this.state };
 		if (data.Content !== '' && data.News_id !== '' && data.Province !== '' && data.Time !== '' && data.Type !== '') {
 			console.log(data);
-			let res = await axios.post(`ESS/action/`, data);
+			let res = await axios.post(`action/`, data);
 			console.log(res);
 			console.log(res.data)
 			if (res.data.success === 'true') alert("提交成功！");
@@ -127,8 +127,8 @@ class PubAction extends React.Component {
 								label="Action Selection"
 								className='举措类型'>
 								<MenuItem value="复工复产">复工复产</MenuItem>
-								<MenuItem value="疫情防控">疫情防控</MenuItem>
-								<MenuItem value="社区监管">社区监管</MenuItem>
+								<MenuItem value="交通出行">交通出行</MenuItem>
+								<MenuItem value="社区管控">社区管控</MenuItem>
 								<MenuItem value="医疗服务">医疗服务</MenuItem>
 							</Select>
 						</FormControl>
