@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import '../../asserts/css/User.css';
-import {backendUrl} from "./Common";
+import { BrowserRouter as Router, Route ,Redirect } from 'react-router-dom';
+import '../../asserts/css/User.css'
+import Title from './Title';
+import UserSelect from './UserSelect';
+import {backendUrl, setCookie} from "./Common";
 import cookie from 'react-cookies'
+import { Button } from 'antd';
+
 
 class User extends Component {
     constructor(props) {
@@ -13,9 +18,14 @@ class User extends Component {
             email:"",
             real_name:"",
         };
+        this.Info = this.Info.bind(this);
+        this.Change = this.Change.bind(this);
+        this.Comment = this.Comment.bind(this);
+        this.Application = this.Application.bind(this);
     }
 
     componentDidMount(){
+
         fetch(backendUrl+"user/profile/",{
             method:"get",
             mode:"cors",
@@ -26,6 +36,33 @@ class User extends Component {
         })
             .then(res => res.json())
             .then((result)=>{
+                console.log(result.groups[0]);
+                if(result.groups[0] === "admin_1"||result.groups[0] === "admin_2"||result.groups[0] === "admin_3"||result.groups[0] === "admin_4"){
+                    this.setState({
+                        flag:5,
+                    })
+                }else if(result.groups[0] === "superAdmin"){
+                    this.setState({
+                        flag:6,
+                    })
+                }
+            },
+            (error)=>{
+                console.log(error);
+            })
+
+
+        fetch(backendUrl+"user/profile/",{
+            method:"get",
+            mode:"cors",
+            credentials:"include",
+            headers:{
+                'sessionid':cookie.loadAll().sessionid,
+            }
+        })
+            .then(res => res.json())
+            .then((result)=>{
+                console.log(result);
                 this.setState({
                     username:result.username,
                     phone:result.phone,
@@ -37,19 +74,65 @@ class User extends Component {
                 console.log(error);
             })
     }
-
-    Out=()=>{
-        cookie.save('username','');
+    
+    Info=()=>{
         this.setState({
-            flag:0,
+            flag:1,
         })
     }
 
-    render() {
+    Change=()=>{
+        this.setState({
+            flag:2,
+        })
+    }
 
+    Comment=()=>{
+        this.setState({
+            flag:3,
+        })
+    }
+
+    Application=()=>{
+        this.setState({
+            flag:4,
+        })
+    }
+
+    Out=()=>{
+
+        fetch(backendUrl+"user/logout/",{
+                method:"get",
+                credentials: 'include',
+                headers:{
+                    'sessionid':cookie.loadAll().sessionid,
+                }
+            })
+                .then(res => res.json())
+                .then((result)=>{
+                    if(result.isSuccess){
+                        alert("登出成功!");
+                        cookie.remove('sessionid');
+                        this.setState({
+                            flag:0,
+                        })
+                    }else{
+                        alert("登出失败!");
+                    }
+                },
+            (error)=>{
+                console.log(error);
+            })
+    }
+
+    render() {
+        if(this.state.flag === 1){
             return (
                 <div>
                     <div className = "User">
+                        <div id = "UserName">
+                            {this.state.username}
+                        </div>
                         <div id = "Info">
                             <a>
                                 <text>电话</text>
@@ -67,6 +150,19 @@ class User extends Component {
                     </div>
                 </div>
             );
+        }else if(this.state.flag === 3){
+            return <Redirect to = {{pathname:'/User/Comment'}} />
+        }else if(this.state.flag === 2){
+            return <Redirect to = {{pathname:'/User/Change'}} />
+        }else if(this.state.flag === 4){
+            return <Redirect to = {{pathname:'/User/Application'}} />
+        }else if(this.state.flag === 0){
+            return <Redirect to = {{pathname:'/'}} />
+        }else if(this.state.flag === 5){
+            return <Redirect to = {{pathname:'/Operator'}} />
+        }else if(this.state.flag === 6){
+            return <Redirect to = {{pathname:'/SuperOperator'}} />
+        }
     }
 }
 

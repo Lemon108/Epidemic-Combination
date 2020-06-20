@@ -9,22 +9,17 @@ import Comment from './js/Comment';
 import Application from './js/Application';
 import Operator from './js/Operator';
 import SuperOperator from './js/SuperOperator';
-import ChangePassword from './js/ChangePassword';
-import RealChange from './js/RealChange';
-import RealCreate from './js/RealCreate';
 
 
 class UserInfo extends React.Component {
 	render() {
 		return(
-			<Router>
+		<Router>
                    
-                    <Route exact path = "/User/Application" component = {Application}></Route>
-                    <Route exact path = "/Operator" component = {Operator}></Route>
-                    <Route exact path = "/SuperOperator" component = {SuperOperator}></Route>
-                    <Route exact path = "/User/Change/ChangePassword" component = {ChangePassword}></Route>
-                    <Route exact path = "/RealChange" component = {RealChange}></Route>
-                    <Route exact path = "/RealCreate" component = {RealCreate}></Route>
+                  <Route exact path = "/User/Application" component = {Application}></Route>
+                  <Route exact path = "/Operator" component = {Operator}></Route>
+                  <Route exact path = "/SuperOperator" component = {SuperOperator}></Route>
+                  
                
             </Router>
 		);

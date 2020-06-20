@@ -12,6 +12,12 @@ import {Register} from './page/supplies/pages/register/index'
 import {AdminLogin} from './page/supplies/pages/adminLogin/index'
 import {HomeIndex} from './page/supplies/pages/home/index'
 import {AdminHomeIndex} from './page/supplies/pages/adminHome/index'
+import ChangePassword from './page/Users/ChangePassword';
+import RealChange from './page/Users/RealChange';
+import RealCreate from './page/Users/RealCreate';
+import SuperOperator from './page/Users/SuperOperator';
+import News from './page/news/News';
+
 
 import "./index.css";
 import moment from "moment";
@@ -36,10 +42,14 @@ class App extends Component {
 					<Route path="/adminlogin" component={AdminLogin} />
 					<Route path="/home" component={HomeIndex} />
 					<Route path="/adminhome" component={AdminHomeIndex} />
-
 					<Route exact path = '/LoginIn' component = {LoginIn}/>
 					<Route exact path = "/Create" component = {Create}/>
 					<Route path = "/ESS" component = {Main}/>
+					<Route exact path = "/User/Change/ChangePassword" component = {ChangePassword}></Route>
+					<Route exact path = "/RealChange" component = {RealChange}></Route>
+                  	<Route exact path = "/RealCreate" component = {RealCreate}></Route>
+					<Route exact path = "/SuperOperator" component = {SuperOperator}></Route>
+					<Route exact path = "/News" component = {News}></Route>
 				</Switch>
 			</BrowserRouter>
 			</div>

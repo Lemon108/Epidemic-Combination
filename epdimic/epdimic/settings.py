@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
 
-    'Group06',
+    'Group06.users',
+    'Group06.news',
+
     'Group07',
     'Group09',
     'Group08',
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'epdimic.urls'
@@ -91,8 +94,12 @@ WSGI_APPLICATION = 'epdimic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'NAME': 'epidemic',  # 数据库名
+        'USER': 'se2020',  # 账号
+        'PASSWORD': 'Epidemic_2020',  # 密码
+        'HOST': '49.235.194.16',  # HOST
+        'POST': 3306,  # 端口
     },
     'db1': {
         'ENGINE': 'django.db.backends.mysql',
@@ -101,6 +108,15 @@ DATABASES = {
         "PASSWORD":'12345678',
         'HOST':'epidemic-case-demo.mysql.rds.aliyuncs.com',
         'PORT':'3306',
+    },
+    'db_g6': {
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'NAME': 'epidemic',  # 数据库名
+        'USER': 'se2020',  # 账号
+        'PASSWORD': 'Epidemic_2020',  # 密码
+        'HOST': '49.235.194.16',  # HOST
+        'POST': 3306,  # 端口
+
     }
 }
 
@@ -133,6 +149,71 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+#cors
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+
+    'http://*',
+
+)
+
+CORS_ALLOW_METHODS = (
+
+    'DELETE',
+
+    'GET',
+
+    'OPTIONS',
+
+    'PATCH',
+
+    'POST',
+
+    'PUT',
+
+    'VIEW',
+
+)
+
+
+CORS_ALLOW_HEADERS = (
+
+    'accept',
+
+    'XMLHttpRequest',
+
+    'X_FILENAME',
+
+    'accept-encoding',
+
+    'authorization',
+
+    'content-type',
+
+    'dnt',
+
+    'origin',
+
+    'user-agent',
+
+    'x-csrftoken',
+
+    'x-requested-with',
+
+    'Pragma',
+
+    'X-Custom-Header',
+
+    'sessionid'
+
+)
+
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -155,3 +236,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "templates","static"),    #公共静态文件目录，可以被搜集到上面的STATIC_ROOT下
 )
+
+# 用户表
+AUTH_USER_MODEL = 'users.UserInfo'
+
+
+
+# G6 邮箱验证的前端链接
+EMAIL_VERIFY_URL = 'http://127.0.0.1:3000/'
+
+
+DEFAULT_SUPERUSER_INFO = {
+    'phone': '15111111111',
+    'real_name': 'superUser',
+    'citizen_id': '500000000000000000'
+}

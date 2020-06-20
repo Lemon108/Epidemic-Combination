@@ -6,6 +6,11 @@ import '../../asserts/css/Info.css';
 import Title from './Title';
 import {backendUrl} from "./Common";
 import cookie from 'react-cookies'
+import Body from './Body';
+import { Button, Form,Input, Checkbox } from 'antd';
+import Navi from '../../components/Menu/Navigator';
+import Logo from '../../asserts/logo.jpg';
+import '../../components/Menu/Menu.css';
 var storage=window.localStorage;
 
 class LoginIn extends Component {
@@ -32,6 +37,7 @@ class LoginIn extends Component {
     }
 
     AppData=()=>{
+        
         fetch(backendUrl+"user/login/post/",{
             method:"post",
             mode:"cors",
@@ -43,7 +49,6 @@ class LoginIn extends Component {
                 this.setState({
                     isLogin:result.isSuccess,
                 })
-
                 if(this.state.isLogin) {
                
                     storage.setItem("sessionid",result.session_id);
@@ -58,7 +63,9 @@ class LoginIn extends Component {
                     this.setState({
                         flag : 3,
                     })
-            }
+                }else{
+                    alert("用户名和密码错误");
+                }
                
             },
         (error)=>{
@@ -77,31 +84,47 @@ class LoginIn extends Component {
         if(this.state.flag === 1){
             return (
                 <div>
-                    <Title></Title>
+                    <div className = "header">
+                        <img class = "logo" src = {Logo} alt="校徽" />
+                        <div class ="title"> 疫情管控系统 </div>
+                        <div style = {{alignSelf:'flex-end'}}> <Navi /> </div>
+                    </div>
                     <div className = "Logo_Login" style={{float:'left'}}>
+                        <Body></Body>
                     </div>
                     <div className = "Info_Login" style={{float:'left'}}>
                         <div>
-                            <form>
-                                <div>
-                                     <input id = "text" type = "text" name = "用户名" placeholder = "用户名" ref = "name" onChange = {(e)=>this.GetUsername(e)}/>
-                                </div>
-                                <div>
-                                    <div>
-                                        <input id = "text" type = "password" name = "密码" placeholder = "密码" ref = "code" onChange = {(e)=>this.GetCode(e)}/>
-                                    </div>
-                                </div>
-                            </form>
-                            <div>
-                                <button onClick = {this.AppData}>
+                        <Form
+                            name="basic"
+                            initialValues={{ remember: true }}
+                            onFinish={this.AppData}>
+                            
+                            <Form.Item
+                                label="用户名"
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your username!' }]}
+                            >
+                                <Input onChange = {(e)=>this.GetUsername(e)}/>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="密码"
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your password!' }]}>
+
+                                <Input.Password onChange = {(e)=>this.GetCode(e)}/>
+
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
                                     登录
-                                </button>
-                            </div>
-                            <div>
-                                <button onClick = {this.Back}>
+                                </Button>
+                                <Button onClick = {this.Back} type = "primary">
                                     返回
-                                </button>
-                            </div>
+                                </Button>
+                            </Form.Item>
+                        </Form>
                         </div>
                     </div>
                 </div>

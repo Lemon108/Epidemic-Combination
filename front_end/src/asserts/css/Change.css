@@ -1,8 +1,9 @@
 .Change{
     width: 70%;
-    border:5px #00478180 solid;
+    text-align: center;
     border-radius: 10px;
-    margin-left: 22%;
+    background-color: white;
+    margin-left: 15%;
     margin-top: 5%;
 }
 
@@ -20,31 +21,16 @@
     opacity: 0.8;
 }
 
-.Change button{
-    color: black;
-    background-color: white;
-    border-color: #00478180;
-    transition-duration: 0.4s;
-    opacity: 0.8;
-    width: 91%;
-    height: 40px;
-    font-size: 20px;
-    margin-top: 2.5%;
-    margin-bottom: 5.5%;
-    margin-left: 2.5%;
-    border-radius: 10px;
-}
 
-.Change button:hover{
-    color: white;
-    background-color: #00478180;
-    border-color: #00478180;
-    opacity: 0.8;
-    width: 91%;
+.Change Button{
+    width:40%;
     height: 40px;
     font-size: 20px;
     margin-top: 2.5%;
-    margin-bottom: 5.5%;
+    margin-bottom: 2.5%;
+    margin-right: 2.5%;
     margin-left: 2.5%;
+    padding-left: 2.5%;
     border-radius: 10px;
+    opacity: 0.8;
 }

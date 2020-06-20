@@ -4,6 +4,7 @@ import {Link, Redirect} from 'react-router-dom';
 import Navi from './Navigator';
 import Logo from '../../asserts/logo.jpg';
 import './Menu.css';
+import cookie from 'react-cookies'
 var storage=window.localStorage;
 //import cookie from 'react-cookies'
 
@@ -21,7 +22,7 @@ class Menu extends React.Component{
 
     Out=()=>{
         storage.removeItem("username")
-        //cookie.remove('username');
+        cookie.remove('sessionid');
         this.setState = {
             isLoginIn:false,
         }
