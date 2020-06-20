@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import "../../asserts/css/Header.css";
-import ZjuLogo from "../../asserts/image/timgXFIKOJKO.png"
+import '../../asserts/css/Header.css';
+import ZjuLogo from '../../asserts/image/timgXFIKOJKO.png';
 
 class Title extends Component {
     constructor(props) {

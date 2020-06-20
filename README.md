@@ -30,6 +30,30 @@
 
 6. 上传了前端源代码，比后端的templates文件里的前端版本，改进了登录和注销的功能。
 
+7. 关于权限检测，可以使用Group06.users.decorators中的两个装饰器 login_required 和 group_required
+   【这两个装饰器的使用都需要在请求头中加上 "sessionid":"xxxxxxxx" （sessionid全小写）】
+   这个sessionid在登录成功时会被写到用户浏览器的cookie中，key名也是sessionid
+   因为在我们的实测中fetch带cookie有可能会有问题，所以麻烦手动从cookie中读取
+   使用时，首先在需要使用的模块中引入
+```python
+   from Group07.users import decoators
+```
+   接着 在需要进行权限检测的视图函数上
+```python
+   # group_required接受一组用户group的字符串，如下例，代表这个example函数可以被拥有admin_1组或admin_2组的用户访问
+   # 如果用户拥有权限，会被放行，反之，会重定向请求（302码）到后端的另一接口，然后返回一个HttpResponseForbidden（403码），内容是"您无权访问该页面"
+   @group_required('admin_1','admin_2')  
+   def example(request: HttpRequest)
+
+   # login_required使用如下，它会验证用户的.is_authenticated属性，如果True，放行，否则重定向请求（302码）到后端的另一接口，然后返回一个HttpResponse（200ma），内容是"login"
+   @login_required
+   def example(request: HttpRequest)
+   这样 就实现了权限和登录验证
+```
+
+
 把原先的后端放进去应该还是挺快的，这也是一个让自己代码更整洁的机会，可以删掉许多没用的东西
 
 遇到具体问题请及时反馈沟通
+
+8.测试

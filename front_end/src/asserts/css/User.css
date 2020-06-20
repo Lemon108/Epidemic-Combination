@@ -1,37 +1,29 @@
 .User{
-    width: 70%;
-    border:5px #00478180 solid;
+    text-align: center;
+    width: 80%;
+    height: 20%;
     border-radius: 10px;
-    margin-left: 22%;
+    margin-left: 5%;
     margin-top: 5%;
+    background-color: white;
 }
 
 .User #UserName{
-    float: left;
-    font-size: 20px;
-    margin-left: 10%;
-    margin-top: 1%;
+    font-size: 40px;
     margin-bottom: 1%;
 }
 
 .User #Type{
     font-size: 15px;
-    margin-left: 30%;
-    margin-top: 1.6%;
     margin-bottom: 1%;
 }
 
 .User #Info{
-    font-size: 15px;
-    margin-left: 10%;
+    font-size: 20px;
     margin-top: 1.6%;
     margin-bottom: 1%;
 }
 
 .User #Info text{
     margin-right: 5%;
-}
-
-.User #Info a{
-    margin-right: 8%;
 }

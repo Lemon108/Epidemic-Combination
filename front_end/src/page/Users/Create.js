@@ -5,6 +5,11 @@ import '../../asserts/css/Logo.css';
 import '../../asserts/css/Info.css';
 import Title from './Title'
 import {backendUrl} from "./Common";
+import cookie from 'react-cookies'
+import { Button } from 'antd';
+import Navi from '../../components/Menu/Navigator';
+import Logo from '../../asserts/logo.jpg';
+import '../../components/Menu/Menu.css';
 
 class Create extends Component {
     constructor(props) {
@@ -74,16 +79,19 @@ class Create extends Component {
             alert("身份证号不合法!");
         }else{
             
-            fetch(backendUrl+"user/profile/changepass/set_new/",{
-                mode:"cors",
-                credentials: 'include',
-            })
-                .then(res => res.json())
-                .then((tokenresult)=>{
-                },
-            (error)=>{
-                console.log(error);
-            })
+        //     fetch(backendUrl+"user/register/post",{
+        //         mode:"cors",
+        //         credentials: 'include',
+        // headers:{
+        //     'sessionid':cookie.loadAll().sessionid,
+        // }
+        //     })
+        //         .then(res => res.json())
+        //         .then((tokenresult)=>{
+        //         },
+        //     (error)=>{
+        //         console.log(error);
+        //     })
 
             fetch("http://127.0.0.1:8000/user/register/post/",{
                 method:"post",
@@ -92,18 +100,59 @@ class Create extends Component {
             })
                 .then(res => res.json())
                 .then((result)=>{
+                    alert(result.message);
+                    if(result.isSuccess){
+                        this.setState({
+                    flag:0,
+                    })
+                    }
                 },
             (error)=>{
                 console.log(error);
             })
 
-            alert("用户注册成功");
+
+
+        }
+
+    }
+
+    /*OperatorAppData=()=>{
+
+        if(this.refs.code.value != this.refs.if_same_code.value){
+            alert("确认密码错误，请重新输入");
+        }else{
+
+            this.setState({
+                username:this.refs.name.value,
+                password:this.refs.code.value,
+                phone:this.refs.phone.value,
+                email:this.refs.address.value,
+                citizen_id:this.refs.ID.value,
+                user_type:1,
+            })
+    
+            fetch("register/post/",{
+                method:"post",
+                body:JSON.stringify(this.state),
+                headers:{
+                    'content-type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then((result)=>{
+                    
+                },
+            (error)=>{
+                console.log(error);
+            })
+
+            alert("管理员注册成功");
             this.setState({
                 flag:0,
             })
         }
-
-    }
+    }*/
 
     Back=()=>{
         this.setState({
@@ -122,24 +171,36 @@ class Create extends Component {
         if(this.state.flag === 2){
             return (
                 <div>
-                    <Title></Title>
+                    <div className = "header">
+                        <img class = "logo" src = {Logo} alt="校徽" />
+                        <div class ="title"> 疫情管控系统 </div>
+                        <div style = {{alignSelf:'flex-end'}}> <Navi /> </div>
+                    </div>
                     <div className = "Info_Create" style={{float:'left'}}>
                         <div>
                             <form>
                                 <div>
-                                    <input type = "text" name = "用户名" placeholder = "用户名" ref = "name" onChange = {(e)=>this.GetUsername(e)}/>
-                                    <input type = "text" name = "邮箱" placeholder = "邮箱" ref = "address" onChange = {(e)=>this.GetEmail(e)}/>               
+                                    <div>
+                                        <input type = "text" name = "用户名" placeholder = "用户名" ref = "name" onChange = {(e)=>this.GetUsername(e)}/>
+                                        <input type = "text" name = "邮箱" placeholder = "邮箱" ref = "address" onChange = {(e)=>this.GetEmail(e)}/>
+                                    </div>
                                 </div>
                                 <div>
-                                    <input type = {this.state.change} name = "密码" placeholder = "密码" ref = "code" onChange = {(e)=>this.GetCode(e)}/>
-                                    <input type = "text" name = "电话号码" placeholder = "电话号码" ref = "phone" onChange = {(e)=>this.GetPhone(e)}/>
+                                    <div>
+                                        <input type = {this.state.change} name = "密码" placeholder = "密码" ref = "code" onChange = {(e)=>this.GetCode(e)}/>
+                                        <input type = "text" name = "电话号码" placeholder = "电话号码" ref = "phone" onChange = {(e)=>this.GetPhone(e)}/>
+                                    </div>
                                 </div>
                                 <div>
-                                    <input type = {this.state.change} name = "确认密码" placeholder = "确认密码" ref = "if_same_code"/>
-                                    <input type = "text" name = "身份证号" placeholder = "身份证号" ref = "ID" onChange = {(e)=>this.GetID(e)}/>
+                                    <div>
+                                        <input type = {this.state.change} name = "确认密码" placeholder = "确认密码" ref = "if_same_code"/>
+                                        <input type = "text" name = "身份证号" placeholder = "身份证号" ref = "ID" onChange = {(e)=>this.GetID(e)}/>
+                                    </div>
                                 </div>
                                 <div>
-                                    <input type = "text" name = "真实姓名" placeholder = "真实姓名" ref = "real_name" onChange = {(e)=>this.GetRealName(e)}/>
+                                    <div>
+                                        <input type = "text" name = "真实姓名" placeholder = "真实姓名" ref = "real_name" onChange = {(e)=>this.GetRealName(e)}/>
+                                    </div>
                                 </div>
                             </form>
                             <div>
@@ -157,7 +218,7 @@ class Create extends Component {
                 </div>
             );
         }else if(this.state.flag === 0){
-            return <Redirect to = {{pathname:'/ESS/situation'}} />
+            return <Redirect to = {{pathname:'/'}} />
         }
     }
 }

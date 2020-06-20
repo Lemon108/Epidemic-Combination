@@ -1,26 +1,27 @@
 .Info_Login{
-    width: 40%;
-    padding-top: 5%;
+    width: 25%;
+    background-color: white;
+    margin-top: 10%;
+    margin-left: 5%;
+    padding-top: 2%;
+    text-align: center;
 }
 
 .Info_Create{
     width: 50%;
-    padding-top: 5%;
-    margin-left: 15%;
+    background-color: white;
+    margin-top: 2.5%;
+    padding-top: 2.5%;
+    margin-left: 25%;
     text-align: center;
     background-image: url('../image/timgXFIKOJKO.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.Info_Login #text{
-    width: 40%;
-    height: 40px;
-    font-size: 20px;
-    margin-bottom: 7%;
-    margin-top: 5%;
-    padding-left: 2.5%;
-    border-radius: 10px;
+.Info_Login Form{
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .Info_Login #Select{
@@ -41,28 +42,15 @@
 }
 
 .Info_Login button{
-    color:black;
-    background-color: white;
-    border:2px solid #004781;
-    transition-duration: 0.4s;
-    width: 43%;
+    width: 40%;
     height: 40px;
     font-size: 20px;
+    margin-left: 4%;
+    margin-right: 4%;
     margin-bottom: 5.5%;
     border-radius: 10px;
 }
 
-.Info_Login button:hover{
-    color:white;
-    background-color: #004781;
-    border:2px solid #004781;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    width: 43%;
-    height: 40px;
-    font-size: 20px;
-    margin-bottom: 5.5%;
-    border-radius: 10px;
-}
 
 .Info_Create button{
     color: black;
