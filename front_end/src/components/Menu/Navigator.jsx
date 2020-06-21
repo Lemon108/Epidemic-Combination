@@ -18,7 +18,6 @@ class Navi extends React.Component {
           <Menu.ItemGroup>
             <Menu.Item key="transportation-shift"> <Link to = '/ESS/transportation/shift'> 班次 </Link> </Menu.Item>
             <Menu.Item key="transportation-flight"> <Link to = '/ESS/transportation/flight'> 航班 </Link> </Menu.Item>
-            <Menu.Item key="transportation-admin"> <Link to = '/ESS/transportation/admin'> 导入班次 </Link> </Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
         <SubMenu icon={<NotificationOutlined />} title="复工情况">

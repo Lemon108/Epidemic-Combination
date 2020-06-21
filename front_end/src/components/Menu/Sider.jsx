@@ -15,7 +15,13 @@ class LeftSider extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            PermissionLevel:7,  // 0：超级管理员，1-5分别是四个子系统的管理员，6是普通用户
+            Super: false,
+            admin_1: false,
+            admin_2: false,
+            admin_3: false,
+            admin_4: false,
+            admin_5: false,
+            //PermissionLevel:[0,0,0,0,0,0,0], 0：超级管理员，1-5分别是四个子系统的管理员，6是普通用户
         }
 
         if(storage.hasOwnProperty("username")){
@@ -33,54 +39,57 @@ class LeftSider extends React.Component {
         }
     }
 
+
     componentWillMount(){
         fetch(backendUrl+"user/profile/",{
             method:"get",
             mode:"cors",
             credentials:"include",
             headers:{
-                //'sessionid':cookie.loadAll().sessionid,
                 sessionid: storage.getItem("sessionid")
             }
         })
             .then(res => res.json())
             .then((result)=>{
-                var group = result.groups[0];
-                if(group === "SuperAdmin"){
-                    this.setState = ({
-                        PermissionLevel:0
-                    })
+                var group = result.groups;
+
+                for(var i=0;i<group.length;i++){
+                    if(group[i] === "SuperAdmin"){
+                        this.setState = ({
+                            Super: true
+                        })
+                    }
+                    else if(group[i] === "admin_1"){
+                        this.setState({
+                           admin_1: true
+                        })
+                    }
+                    else if(group[i] === "admin_2"){
+                        this.setState({
+                            admin_2: true
+                        })
+                    }
+                    else if(group[i] === "admin_3"){
+                        this.setState({
+                            admin_3:true
+                        })
+                    }
+                    else if(group[i] === "admin_4"){
+                        this.setState({
+                            admin_4: true
+                        })
+                    }
+                    else if(group[i] === "admin_5"){
+                        this.setState({
+                            admin_5: true
+                        })
+                    }
                 }
-                else if(group === "admin_1"){
-                    this.setState({
-                        PermissionLevel:1
-                    })
-                }
-                else if(group === "admin_2"){
-                    this.setState({
-                        PermissionLevel:2
-                    })
-                }
-                else if(group === "admin_3"){
-                    this.setState({
-                        PermissionLevel:3
-                    })
-                }
-                else if(group === "admin_4"){
-                    this.setState({
-                        PermissionLevel:4
-                    })
-                }
-                else if(group === "admin_5"){
-                    this.setState({
-                        PermissionLevel:5
-                    })
-                } 
-                else if(group === "admin_6"){
-                    this.setState({
-                        PermissionLevel:6
-                    })
-                }              
+                
+                /*this.setState({
+                    PermissionLevel:group
+                })*/
+
             },
             (error)=>{
                 console.log(error);
@@ -107,13 +116,13 @@ class LeftSider extends React.Component {
                     </Menu.ItemGroup>
                 </SubMenu>
                 {
-                    this.state.PermissionLevel === 0?(<Menu.Item key="SuperAdmin"> <Link to = '/ESS/background/createadmin'> 建立管理员账户 </Link></Menu.Item>):(<div/>)
+                    this.state.Super === true ?(<Menu.Item key="SuperAdmin"> <Link to = '/ESS/background/createadmin'> 建立管理员账户 </Link></Menu.Item>):(<div/>)
                 }
                 {
-                    this.state.PermissionLevel === 1?(<Menu.Item key="News"> <Link to = '/ESS/background/News'> 疫情新闻发布 </Link></Menu.Item>):(<div/>)
+                    this.state.admin_1 === true ?(<Menu.Item key="News"> <Link to = '/ESS/background/News'> 疫情新闻发布 </Link></Menu.Item>):(<div/>)
                 }
                 {
-                    this.state.PermissionLevel === 3?(<Menu.Item key="Cases"> <Link to ={{
+                    this.state.admin_3 === true ?(<Menu.Item key="Cases"> <Link to ={{
                         pathname: '/ESS/background/Cases',
 						state: {
 							province: this.state.province
@@ -121,10 +130,10 @@ class LeftSider extends React.Component {
                     }}> 病例监测信息发布 </Link> </Menu.Item>):(<div/>)
                 }
                 {
-                    this.state.PermissionLevel === 2?(<Menu.Item key="Transportation"> <Link to = '/ESS/background/transportation'> 高危列车/航班信息发布 </Link></Menu.Item>):(<div/>)
+                    this.state.admin_2 === true ?(<Menu.Item key="Transportation"> <Link to = '/ESS/background/transportation'> 高危列车/航班信息发布 </Link></Menu.Item>):(<div/>)
                 }
                 {
-                    this.state.PermissionLevel === 5?(
+                    this.state.admin_5 === true ?(
                         <SubMenu key = "public" icon = {<NotificationOutlined/>} title = "信息发布">
                             <Menu.Item key="ResumeAction"> <Link to = '/ESS/background/resumeaction'> 复工举措发布 </Link></Menu.Item>
                             <Menu.Item key="PopFlow"> <Link to = '/ESS/background/populationflow'> 人口流动信息发布 </Link></Menu.Item>

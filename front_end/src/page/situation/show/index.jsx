@@ -123,6 +123,8 @@ class Situation extends React.Component {
 		// 传值设定state
 		var cureRatio = statistic[2] / statistic[0] * 100
 		var deadRatio = statistic[1] / statistic[0] * 100
+		cureRatio.toFixed(2);
+		deadRatio.toFixed(2);
 		that.setState({
 			statistic: statistic,
 			cureRatio: cureRatio,
@@ -146,9 +148,7 @@ class Situation extends React.Component {
 				curedList: curedList,
 				dates: dates
 			})
-		/*
-		!! TEST
-		*/
+
 
 	}
 
