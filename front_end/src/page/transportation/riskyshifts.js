@@ -1,32 +1,27 @@
 import React, { Component } from 'react';
-import { Button, List, Tag, Modal, Table, Space } from 'antd';
+import { Button, List, Tag, Modal, Table, Space, Result } from 'antd';
 import RiskLevel from './risklevel';
 import FileSaver from 'file-saver';
+import cookie from 'react-cookies';
 
 
-const server = 'http://127.0.0.1:8000';
+const server = 'http://127.0.0.1:8000/ESS';
 
 class DetailInfo extends Component {
     state = {
         visible: false,
-        userInfo: [
-            { 'name': 'a', 'email': '1' },
-            { 'name': 'b', 'email': '2' },
-            { 'name': 'c', 'email': '3' },
-            { 'name': 'd', 'email': '4' },
-            { 'name': 'e', 'email': '5' },
-        ]
+        userInfo: []
     };
 
     showModal = () => {
         fetch(
-            server + '/transport/register?uid=4&shift_id=' + this.props.sft_id
+            server + '/transport/detail/?shift_id=' + this.props.shift_id
         )
             .then(res => res.json())
             .then(data => {
                 console.log(data)
                 this.setState({
-                    // userInfo: data
+                    userInfo: data
                 })
             })
             .catch(e => console.log('错误:', e))
@@ -50,7 +45,7 @@ class DetailInfo extends Component {
 
     sendWarning() {
         fetch(
-            server + '/transport/mail/?shift_id=' + this.props.sft_id
+            server + '/transport/mail/?shift_id=' + this.props.shift_id
         )
             .then(res => res.json())
             .then(data => {
@@ -72,7 +67,7 @@ class DetailInfo extends Component {
         let blob = new Blob([exportContent + str], {
             type: "text/plain;charset=utf-8"
         });
-        FileSaver.saveAs(blob, this.props.sft_id + ".csv");
+        FileSaver.saveAs(blob, this.props.shift_id + ".csv");
     }
 
     render() {
@@ -100,8 +95,8 @@ class DetailInfo extends Component {
                         )}
                     >
                     </List>
-                    <Button type="primary" onClick={e => {e.preventDefault(); this.sendWarning()}} >发布提醒</Button>
-                    <Button type="primary" onClick={e => {e.preventDefault(); this.exportInfo(this.state.userInfo)}} >导出信息</Button>
+                    <Button type="primary" onClick={e => { e.preventDefault(); this.sendWarning() }} >发布提醒</Button>
+                    <Button type="primary" onClick={e => { e.preventDefault(); this.exportInfo(this.state.userInfo) }} >导出信息</Button>
                 </Modal>
             </div>
         );
@@ -111,7 +106,13 @@ class DetailInfo extends Component {
 class ModifyInfo extends Component {
     state = {
         visible: false,
-        danger_level: 0
+        danger_level: 0,
+        riskyLevelToNum: {
+            "安全": 0,
+            "低风险": 1,
+            "风险": 2,
+            "高风险": 3
+        },
     };
 
     showModal = () => {
@@ -122,7 +123,7 @@ class ModifyInfo extends Component {
 
     handleOk = e => {
         fetch(
-            server + '/transport/register?uid=4&shift_id=' + this.props.sft_id + '&danger_level=' + this.state.danger_level
+            server + '/transport/modify/?&shift_id=' + this.props.shift_id + '&danger_level=' + this.state.riskyLevelToNum[this.state.danger_level]
         )
             .then(res => res.json())
             .then(data => {
@@ -216,26 +217,44 @@ class RiskyShifts extends Component {
                 render: (text, record) => this.action(this.props.role, record.shift_id, record.No)
             },
         ];
+        fetch('http://127.0.0.1:8000/user/profile/', {
+            method: "get",
+            mode: "cors",
+            credentials: 'include',
+            headers: {
+                'sessionid': cookie.loadAll().sessionid,
+            }
+        })
+            .then(res => res.json())
+            .then((result) => {
+                console.log(result);
+                this.setState({
+                    uid: result.uid,
+                })
+            })
     }
 
     userBind(id, No) {
+
         fetch(
-            server + '/transport/register?uid=4&shift_id=' + id,
-            // {
-            //     credentials: 'include',
-            //     headers: {
-            //         'sessionid': cookie.loadAll().sessionid,
-            //     }
-            // }
+            server + '/transport/register/?uid=' + this.state.uid + '&shift_id=' + id + '&type=' + this.props.type,
+            {
+                credentials: 'include',
+                headers: {
+                    'sessionid': cookie.loadAll().sessionid,
+                }
+            }
         )
             .then(res => res.json())
             .then(data => {
-                // if (!data[is_login])
-                //     alert('绑定失败！请登录！');
-                // else if (!data[is_auth])
-                //     alert('绑定失败！请实名认证！');
-                // else
-                alert("成功绑定列车" + No + "!")
+                if (!data['is_login'])
+                    alert('绑定失败！请登录！');
+                else if (!data['is_auth'])
+                    alert('绑定失败！请实名认证！');
+                else if (!data['is_register'])
+                    alert("成功绑定" + No + "!")
+                else
+                    alert("您已绑定过该班次！")
             })
             .catch(e => console.log('错误:', e))
     }
@@ -244,12 +263,12 @@ class RiskyShifts extends Component {
     //    对用户来说是绑定
     //    对管理员来说是列出详情（车次中的乘客信息，下属有导出 与 发布提醒功能）及修改班次风险等级
     // 角色role由对应的标签传入
-    action(r, sft_id, No) {
-        if (r === 'user') return (<Button type="primary" onClick={e => { e.preventDefault(); this.userBind(sft_id, No) }}>绑定</Button>)
+    action(r, shift_id, No) {
+        if (r === 'user') return (<Button type="primary" onClick={e => { e.preventDefault(); this.userBind(shift_id, No) }}>绑定</Button>)
         else if (r === 'admin') return (
             <Space direction="vertical" size={1}>
-                <DetailInfo shift_id={sft_id} />
-                <ModifyInfo shift_id={sft_id} />
+                <DetailInfo shift_id={shift_id} />
+                <ModifyInfo shift_id={shift_id} />
             </Space>
         )
         else return null

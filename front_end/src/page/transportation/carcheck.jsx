@@ -22,7 +22,7 @@ class HomeShift extends Component {
             danger_level: "",
             board_id: "",
             register_id: "",
-            type: 0,
+            type: 1,
             queryResult: []
         }
         this.onInputChange = this.onInputChange.bind(this);
@@ -79,8 +79,8 @@ class HomeShift extends Component {
     render() {
         return (
             <div>
-                <center><Title level={2}>同乘交通自查</Title></center>
                 <div className="container">
+                    <center><Title level={2}>班次查询</Title></center>
                     <Input placeholder="出发地" size="large" className="input-width" onChange={(e) => (this.onInputChange('start_p', e))} />
                     <br /><br />
                     <Input placeholder="到达地" size="large" className="input-width" onChange={(e) => (this.onInputChange('end_p', e))} />
