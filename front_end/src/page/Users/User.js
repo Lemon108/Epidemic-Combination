@@ -37,11 +37,7 @@ class User extends Component {
             .then(res => res.json())
             .then((result)=>{
                 console.log(result.groups[0]);
-                if(result.groups[0] === "admin_1"||result.groups[0] === "admin_2"||result.groups[0] === "admin_3"||result.groups[0] === "admin_4"){
-                    this.setState({
-                        flag:5,
-                    })
-                }else if(result.groups[0] === "superAdmin"){
+                if(result.groups[0] === "superAdmin"){
                     this.setState({
                         flag:6,
                     })
@@ -157,9 +153,7 @@ class User extends Component {
         }else if(this.state.flag === 4){
             return <Redirect to = {{pathname:'/User/Application'}} />
         }else if(this.state.flag === 0){
-            return <Redirect to = {{pathname:'/'}} />
-        }else if(this.state.flag === 5){
-            return <Redirect to = {{pathname:'/Operator'}} />
+            return <Redirect to = {{pathname:'/ESS/situation'}} />
         }else if(this.state.flag === 6){
             return <Redirect to = {{pathname:'/SuperOperator'}} />
         }

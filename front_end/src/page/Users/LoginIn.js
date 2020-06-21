@@ -130,7 +130,6 @@ class LoginIn extends Component {
                 </div>
             );
         }else if(this.state.flag === 0){
-
             return <Redirect to = {{pathname:'/ESS/situation'}} />
         }else if(this.state.flag === 3){
             return <Redirect to = {{pathname:'/ESS/situation'}}/>

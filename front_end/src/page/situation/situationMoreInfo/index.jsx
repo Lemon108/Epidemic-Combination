@@ -159,6 +159,7 @@ class SituationMoreInfo extends React.Component {
 
 			// 处理省份输入输出
 			var ratio = Math.round(statistic[4] / statistic[0] * 100)
+			ratio.toFixed(2);
 
 			// 处理各省的四个趋势图
 			var dates = [], diag_list = [], dead_list = [], cured_list = [], newAddList = [];
