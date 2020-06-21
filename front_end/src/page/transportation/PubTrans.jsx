@@ -14,7 +14,6 @@ class AskRiskLevel extends Component {
   state = {
     visible: false,
     danger_level: 0,
-    type: 0,
     riskyLevelToNum: {
       "安全": 0,
       "低风险": 1,
@@ -45,7 +44,7 @@ class AskRiskLevel extends Component {
         server + '/transport/record/?No=' + this.props.No
         + '&start_p=' + this.props.start_p + '&end_p=' + this.props.end_p
         + '&date=' + this.props.start_t + '&danger_level=' + this.state.riskyLevelToNum[this.state.danger_level]
-        + '&type=' + this.state.type
+        + '&type=' + this.props.type
       )
         .then(res => res.json())
         .then(data => {
@@ -75,7 +74,7 @@ class AskRiskLevel extends Component {
           导入
               </Button>
         <Modal
-          title="Basic Modal"
+          title="修改风险等级"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -184,7 +183,7 @@ class Admin extends Component {
             <Input className="input-width" placeholder="目的地" onChange={e => this.onInputChange('end_p', e)} />
             <DatePicker className="input-width" onChange={(date, dateString) => this.onDateChange(date, dateString)} />
             <Type onChange={(ty) => this.setState({ type: ty })} />
-            <AskRiskLevel No={this.state.No} start_p={this.state.start_p} end_p={this.state.end_p} start_t={this.state.start_t} />
+            <AskRiskLevel No={this.state.No} start_p={this.state.start_p} end_p={this.state.end_p} start_t={this.state.start_t} type={this.state.type} />
             <Button type="primary" onClick={() => this.query()}>查询对应班次</Button>
           </Space>
         </div>

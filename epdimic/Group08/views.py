@@ -4,7 +4,7 @@ import json
 from .models import Transport
 from django.core.mail import send_mail
 from epdimic import settings
-# from Group06.models import UserInfo
+from Group06.users.models import UserInfo
 
 def _Info(t):
     datanode= {}
@@ -52,11 +52,10 @@ def register(request):
     data['is_auth'] = 1
     data['is_register'] = 0
     try:
-    	pass
-        # u = UserInfo.objects.get(id=UserID)
-        # tmp = u.citizen_id
-        # if not tmp:
-        #     data['is_auth'] = 0
+        u = UserInfo.objects.get(id=UserID)
+        tmp = u.citizen_id
+        if not tmp:
+            data['is_auth'] = 0
     except:
         data['is_login'] = 0
         data['is_auth'] = 0
@@ -148,11 +147,10 @@ def mail(request):
     
     for j in  receiverID:
         try:
-        	pass
-            # u = UserInfo.objects.get(id=j)
-            # tmp = u.email
-            # if tmp:
-            #     eList.append(u.email)
+            u = UserInfo.objects.get(id=j)
+            tmp = u.email
+            if tmp:
+                eList.append(u.email)
         except:
             pass
 
@@ -190,14 +188,13 @@ def detail(request):
         IDList = tmp.split('#')
         for i in  range(len(IDList)):
             try:
-            	pass
-                # u = UserInfo.objects.get(id=IDList[i])
-                # _username = u.username
-                # _email = u.email
-                # datanode = {}
-                # datanode['name'] = _username
-                # datanode['email'] = u.email
-                # data.append(datanode)
+                u = UserInfo.objects.get(id=IDList[i])
+                _username = u.username
+                _email = u.email
+                datanode = {}
+                datanode['name'] = _username
+                datanode['email'] = u.email
+                data.append(datanode)
             except:
                 pass
     except:
